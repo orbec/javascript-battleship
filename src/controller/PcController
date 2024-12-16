@@ -1,0 +1,54 @@
+import Player from "../model/Player";
+
+const PcController = function () {
+  const lastAttack = [];
+  const getRandomProps = (length) => {
+    let direction =
+      Math.floor(Math.random() * 2) === 0 ? "horizontal" : "vertical";
+    let x = 0;
+    let y = 0;
+    if (direction === "horizontal") {
+      x = Math.floor(Math.random() * 10);
+      y = Math.floor(Math.random() * (10 - length));
+    } else {
+      x = Math.floor(Math.random() * (10 - length));
+      y = Math.floor(Math.random() * 10);
+    }
+
+    return {
+      direction,
+      x,
+      y,
+    };
+  };
+
+  const initPlayer = () => {
+    const player = new Player("PC", "pc");
+    return placeShip(player);
+  };
+
+  const placeShip = (player) => {
+    const player2 = player;
+    player2.ships.forEach((ship) => {
+      let props = getRandomProps(ship.length);
+      let direction = props.direction;
+      let x = props.x;
+      let y = props.y;
+      let board = null;
+      while (board === null) {
+        board = player2.gameBoard.placeShip(ship, [x, y], direction);
+        props = getRandomProps(ship.length);
+        direction = props.direction;
+        x = props.x;
+        y = props.y;
+      }
+    });
+    return player2;
+  };
+
+  return {
+    initPlayer,
+  };
+};
+
+export default PcController;

@@ -1,3 +1,5 @@
 import "./style.css";
+import playGame from "./controller/CliController.js";
 
-console.log("Javascript template");
+window.a = playGame();
+console.log(window.a.player1.board);
